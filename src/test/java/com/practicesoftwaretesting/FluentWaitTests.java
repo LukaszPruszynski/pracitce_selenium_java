@@ -4,9 +4,11 @@ import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,7 +31,9 @@ public class FluentWaitTests
 	public void setup()
 	{
 		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
+		ChromeOptions chromeOptions = new ChromeOptions();
+		chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+		driver = new ChromeDriver(chromeOptions);
 		driver.manage().window().maximize();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
@@ -47,7 +51,9 @@ public class FluentWaitTests
 		WebElement revealed = driver.findElement(By.id("revealed"));
 		driver.findElement(By.id("reveal")).click();
 
-		Wait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(2)).pollingEvery(Duration.ofMillis(300))
+		Wait<WebDriver> wait = new FluentWait<>(driver)
+				.withTimeout(Duration.ofSeconds(2))
+				.pollingEvery(Duration.ofMillis(300))
 				.ignoring(ElementNotInteractableException.class);
 
 		wait.until(d -> {
