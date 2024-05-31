@@ -2,8 +2,10 @@ package com.practicesoftwaretesting;
 
 import java.time.Duration;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -32,7 +34,9 @@ public class PageObjectTests
 	public void setup()
 	{
 		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
+		ChromeOptions chromeOptions = new ChromeOptions();
+		chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+		driver = new ChromeDriver(chromeOptions);
 		driver.manage().window().maximize();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
