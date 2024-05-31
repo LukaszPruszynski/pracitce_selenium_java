@@ -49,7 +49,7 @@ public class SignInPage extends BasePage
 			waitForElementToDisappear(loginForm);
 		} catch (Exception e)
 		{
-
+			e.printStackTrace();
 		}
 		return new MyAccountPage(getDriver(), getWait());
 	}

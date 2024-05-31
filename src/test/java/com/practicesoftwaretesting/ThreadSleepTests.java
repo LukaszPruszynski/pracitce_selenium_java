@@ -1,12 +1,8 @@
 package com.practicesoftwaretesting;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -16,11 +12,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 
 @Test()
-public class WaitUntilTests
+public class ThreadSleepTests
 {
-
-	WebDriver driver;
-	WebDriverWait wait;
+	public WebDriver driver;
 	private final String HOME_PAGE_URL = "https://practicesoftwaretesting.com/#/";
 	private final String CUSTOMER_EMAIL_ADDRESS = "customer2@practicesoftwaretesting.com";
 	private final String CUSTOMER_PASSWORD = "welcome01";
@@ -31,8 +25,6 @@ public class WaitUntilTests
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	@AfterMethod
@@ -42,42 +34,42 @@ public class WaitUntilTests
 	}
 
 	@Test
-	public void loginWithInCorrectCredentialsTheHardWay()
+	public void loginWithInCorrectCredentialsTheHardWay() throws InterruptedException
 	{
 		driver.get(HOME_PAGE_URL);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test='search-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//a[@data-test='nav-sign-in']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-test='login-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.id("email")).sendKeys("invalid@email.com");
 		driver.findElement(By.id("password")).sendKeys("S@mplePassword1");
 		driver.findElement(By.xpath("//input[@data-test='login-submit']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-test='login-error']")));
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@data-test='login-error']")).isDisplayed());
+		Thread.sleep(3000);
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='help-block']")).isDisplayed());
 	}
 
 	@Test
-	public void loginWithCorrectCredentialsTheHardWay()
+	public void loginWithCorrectCredentialsTheHardWay() throws InterruptedException
 	{
 		driver.get(HOME_PAGE_URL);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test='search-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//a[@data-test='nav-sign-in']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-test='login-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.id("email")).sendKeys(CUSTOMER_EMAIL_ADDRESS);
 		driver.findElement(By.id("password")).sendKeys(CUSTOMER_PASSWORD);
 		driver.findElement(By.xpath("//input[@data-test='login-submit']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@data-test='nav-favorites']")));
+		Thread.sleep(3000);
 		Assert.assertTrue(driver.findElement(By.xpath("//h1[@data-test='page-title']")).isDisplayed());
 	}
 
 	@Test
-	public void registerNewAccountTheHardWay()
+	public void registerNewAccountTheHardWay() throws InterruptedException
 	{
 		driver.get(HOME_PAGE_URL);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test='search-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//a[@data-test='nav-sign-in']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-test='login-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//a[@data-test='register-link']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test='register-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.id("first_name")).sendKeys("Bob");
 		driver.findElement(By.id("last_name")).sendKeys("Sponge");
 		driver.findElement(By.id("dob")).sendKeys("04202000");
@@ -90,32 +82,31 @@ public class WaitUntilTests
 		driver.findElement(By.id("email")).sendKeys("random+" + Math.random() + "@email.com");
 		driver.findElement(By.id("password")).sendKeys("WelcomeR@nd0mCitiz3n!1");
 		driver.findElement(By.xpath("//button[@data-test='register-submit']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-test='login-submit']")));
+		Thread.sleep(3000);
 		Assert.assertTrue(driver.findElement(By.xpath("//button[@class='google-sign-in-button']")).isDisplayed());
 	}
 
 	@Test
-	public void buyProduct()
+	public void buyProduct() throws InterruptedException
 	{
 		driver.get(HOME_PAGE_URL);
-		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[contains(@data-test,'product')]")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//h5[contains(text(),'Bolt Cutters')]")).click();
-		wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='input-group quantity']/descendant::button")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//button[@data-test='increase-quantity']")).click();
 		driver.findElement(By.xpath("//button[@data-test='increase-quantity']")).click();
 		driver.findElement(By.xpath("//button[@data-test='add-to-cart']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@data-test='cart-quantity']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//a[@data-test='nav-cart']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//button[@data-test='proceed-1']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@data-test='login-submit']")));
+		Thread.sleep(3000);
 		driver.findElement(By.id("email")).sendKeys(CUSTOMER_EMAIL_ADDRESS);
 		driver.findElement(By.id("password")).sendKeys(CUSTOMER_PASSWORD);
 		driver.findElement(By.xpath("//input[@data-test='login-submit']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-test='proceed-2']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//button[@data-test='proceed-2']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form")));
+		Thread.sleep(3000);
 		driver.findElement(By.id("address")).clear();
 		driver.findElement(By.id("address")).sendKeys("Wiener Strasse 13");
 		driver.findElement(By.id("city")).clear();
@@ -127,15 +118,15 @@ public class WaitUntilTests
 		driver.findElement(By.id("postcode")).clear();
 		driver.findElement(By.id("postcode")).sendKeys("90210");
 		driver.findElement(By.xpath("//button[@data-test='proceed-3']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h3[text()='Payment']")));
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//option[text()='Credit Card']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input")));
+		Thread.sleep(3000);
 		driver.findElement(By.id("credit_card_number")).sendKeys("1234-4321-5678-8765");
 		driver.findElement(By.id("expiration_date")).sendKeys("07/2030");
 		driver.findElement(By.id("cvv")).sendKeys("555");
 		driver.findElement(By.id("card_holder_name")).sendKeys("John Howe");
 		driver.findElement(By.xpath("//button[@data-test='finish']")).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='help-block']")));
+		Thread.sleep(3000);
 		Assert.assertTrue("Payment was successful".equals(driver.findElement(By.xpath("//div[@class='help-block']")).getText()));
 	}
 }
