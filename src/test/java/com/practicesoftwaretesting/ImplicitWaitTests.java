@@ -1,27 +1,14 @@
 package com.practicesoftwaretesting;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.ITest;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import com.practicesoftwaretesting.config.Customer;
-import com.practicesoftwaretesting.pages.HomePage;
-import com.practicesoftwaretesting.pages.account.MyAccountPage;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -34,7 +21,7 @@ public class ImplicitWaitTests
 	private final String CUSTOMER_EMAIL_ADDRESS = "customer2@practicesoftwaretesting.com";
 	private final String CUSTOMER_PASSWORD = "welcome01";
 
-	@BeforeTest
+	@BeforeMethod
 	public void setup()
 	{
 		WebDriverManager.chromedriver().setup();
@@ -43,7 +30,7 @@ public class ImplicitWaitTests
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 	}
 
-	@AfterTest
+	@AfterMethod
 	public void tearDown()
 	{
 		driver.quit();
@@ -77,16 +64,16 @@ public class ImplicitWaitTests
 		driver.get(HOME_PAGE_URL);
 		driver.findElement(By.xpath("//a[@data-test='nav-sign-in']")).click();
 		driver.findElement(By.xpath("//a[@data-test='register-link']")).click();
-		driver.findElement(By.id("first_name")).sendKeys("Alaska");
-		driver.findElement(By.id("last_name")).sendKeys("Alaska");
+		driver.findElement(By.id("first_name")).sendKeys("Bob");
+		driver.findElement(By.id("last_name")).sendKeys("Sponge");
 		driver.findElement(By.id("dob")).sendKeys("04202000");
 		driver.findElement(By.id("address")).sendKeys("124 Conch Street");
 		driver.findElement(By.id("postcode")).sendKeys("90210");
-		driver.findElement(By.id("city")).sendKeys("Fairbanks");
-		driver.findElement(By.id("state")).sendKeys("Alaska");
-		driver.findElement(By.xpath("//option[text()='Hungary']")).click();
+		driver.findElement(By.id("city")).sendKeys("Bikini Bottom");
+		driver.findElement(By.id("state")).sendKeys("American Samoa");
+		driver.findElement(By.xpath("//option[text()='Mexico']")).click();
 		driver.findElement(By.id("phone")).sendKeys("222333444");
-		driver.findElement(By.id("email")).sendKeys("random02@email.com");
+		driver.findElement(By.id("email")).sendKeys("random+" + Math.random() + "@email.com");
 		driver.findElement(By.id("password")).sendKeys("WelcomeR@nd0mCitiz3n!1");
 		driver.findElement(By.xpath("//button[@data-test='register-submit']")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("//button[@class='google-sign-in-button']")).isDisplayed());
@@ -106,10 +93,15 @@ public class ImplicitWaitTests
 		driver.findElement(By.id("password")).sendKeys(CUSTOMER_PASSWORD);
 		driver.findElement(By.xpath("//input[@data-test='login-submit']")).click();
 		driver.findElement(By.xpath("//button[@data-test='proceed-2']")).click();
+		driver.findElement(By.id("address")).clear();
 		driver.findElement(By.id("address")).sendKeys("Wiener Strasse 13");
+		driver.findElement(By.id("city")).clear();
 		driver.findElement(By.id("city")).sendKeys("Ingolstadt");
+		driver.findElement(By.id("state")).clear();
 		driver.findElement(By.id("state")).sendKeys("Bavaria");
+		driver.findElement(By.id("country")).clear();
 		driver.findElement(By.id("country")).sendKeys("Germany");
+		driver.findElement(By.id("postcode")).clear();
 		driver.findElement(By.id("postcode")).sendKeys("90210");
 		driver.findElement(By.xpath("//button[@data-test='proceed-3']")).click();
 		driver.findElement(By.xpath("//option[text()='Credit Card']")).click();

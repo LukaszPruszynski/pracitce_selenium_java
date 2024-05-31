@@ -22,16 +22,16 @@ public class Customer
 
 	public Customer()
 	{
-		this.firstName = "Lukasz";
-		this.lastName = "Pruszynski";
+		this.firstName = "Bob";
+		this.lastName = "Sponge";
 		this.dateOfBirth = "12312000";
-		this.address = "Sienkiewicza 82";
-		this.postCode = "15-777";
-		this.city = "Bialystok";
-		this.state = "Podlasie";
-		this.country = "Poland";
+		this.address = "124 Conch Street";
+		this.postCode = "90210";
+		this.city = "Bikini Bottom";
+		this.state = "American Samoa";
+		this.country = "United States of America (the)";
 		this.phone = "333444555";
-		this.email = "ltest4166+" + Math.random() + "@gmail.com";
+		this.email = "random+" + Math.random() + "@email.com";
 		this.password = "Th1s!s@s3cUr3";
 	}
 
